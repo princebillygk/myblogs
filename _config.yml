@@ -28,7 +28,7 @@ twitter_username: princebillygk
 github_username: princebillygk
 
 # Build settings
-theme: minimal
+theme: minima
 plugins:
   - jekyll-feed
 
