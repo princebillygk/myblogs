@@ -1,17 +1,11 @@
 version: "3.8"
-# export JEKYLL_VERSION=3.8
-# docker run --rm \
-#   --volume="$PWD:/srv/jekyll" \
-#   -it jekyll/builder:$JEKYLL_VERSION \
-#   jekyll build
 
 services:
   site:
     image: jekyll/jekyll
-    command: jekyell serve --livereload --verbose
+    command: jekyll serve
     volumes: 
-      - ./:/srv/jekyll
-      - ./cache:/usr/local/bundle
+      - .:/srv/jekyll
     ports:
       - 4000:4000
     environment:
