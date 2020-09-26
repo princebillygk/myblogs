@@ -3,6 +3,7 @@ layout: post
 title:  "Python Programming Notes"
 date:   2020-09-25 16:14:26 -0500
 categories: Python
+author: Prince Billy Graham Karmoker
 tags: python
 ---
 

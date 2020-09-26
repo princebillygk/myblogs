@@ -3,6 +3,7 @@ layout: post
 title:  "PostgresSQL Notes"
 date:   2020-09-25 16:14:26 -0500
 categories: Database
+author: Prince Billy Graham Karmoker
 tags: postgres SQL database
 ---
 
