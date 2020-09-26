@@ -6,7 +6,7 @@ layout: default
 <div class="home">
   <img src="assets/img/banner.gif">
 
-  <main class="wrapper page-content" aria-label="Content">
+  <main class="wrapper" aria-label="Content">
     {{ content }}
     {%- if site.posts.size > 0 -%}
     <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
@@ -29,6 +29,7 @@ layout: default
 
     <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
     {%- endif -%}
-  </div>
+</div>
+</main>
 
 </div>
