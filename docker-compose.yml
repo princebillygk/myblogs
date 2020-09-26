@@ -3,7 +3,7 @@ version: "3.8"
 services:
   site:
     image: jekyll/jekyll
-    command: bash -c "bundle update && jekyll serve"
+    command: bash -c "bundle update && jekyll serve --livereload"
     volumes: 
       - .:/srv/jekyll
       - ./vendor/bundle:/usr/local/bundle
