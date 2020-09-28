@@ -6,6 +6,14 @@ date:   2020-09-25 16:14:26 -0500
 categories: kotlin
 ---
 
+# How you should learn kotlin?
+* **[Take Kotlin Koan Course](https://kotlinlang.org/docs/tutorials/koans.html)**: I don't prefer edutool for this, it is slow and sluggish. the online playground is better
+* If you are a python programmer you must make use of **[Khan Academy kotlin course (text based)](https://khan.github.io/kotlin-for-python-developers/)** - I really get helped from it.
+* **[Go through the codelab courses](https://developer.android.com/courses/basic-android-kotlin-training/overview)** - you can skip the android specific courses for now.
+* Here's the official website **[documentation](https://kotlinlang.org/docs/reference/)** - at least go through once.
+* And last but not least revision this blog every time you start your new project
+
+if you are into competitive programming you can also read this **[article](https://kotlinlang.org/docs/tutorials/competitive-programming.html)** from official website.
 
 ## List
 * **MutableList**: Can be modified after the creation
