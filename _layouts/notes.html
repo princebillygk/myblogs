@@ -4,7 +4,7 @@ layout: general
 
 {{content}}
 {%- if site.notes.size > 0 -%}
-<h2 class="post-list-heading">{{ page.list_title | default: "Snippets" }}</h2>
+<h2 class="post-list-heading">{{ page.list_title | default: "Notes" }}</h2>
 <ul class="post-list">
     {%- for note in site.notes -%}
     <li>
