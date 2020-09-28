@@ -1,7 +1,7 @@
 ---
-layout: snippet
+layout: collection_item
 title: Jekyll Docker Compose
-catagory: Docker
+category: Docker
 filename: docker-compose.yml
 tag: docker-compose.yml docker-compose docker jekyll blog
 ---

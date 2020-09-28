@@ -20,6 +20,8 @@ minima:
 collections:
   snippets:
     output: true
+  notes:
+     output: true
 
 plugins:
  - jekyll-feed
@@ -31,6 +33,7 @@ disqus:
 
 ## header navigation configure
 header_pages: 
+  - notes.markdown
   - snippets.markdown
   - about.markdown
 

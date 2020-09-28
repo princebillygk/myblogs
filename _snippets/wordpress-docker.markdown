@@ -1,7 +1,7 @@
 ---
-layout: snippet
-title: Wordpress | PHP | MYSQl docker-compose
-catagory: Docker
+layout: collection_item
+title: Wordpress | PHP | MYSQL docker-compose
+category: Docker
 filename: docker-compose.yml
 tag: docker-compose.yml docker-compose docker wordpress php mysql
 ---

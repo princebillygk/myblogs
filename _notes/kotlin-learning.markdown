@@ -1,9 +1,8 @@
 ---
-layout: post
-author: Prince Billy Graham Karmoker
+layout: collection_item
 title:  "Kotlin Learning"
-date:   2020-09-25 16:14:26 -0500
-categories: kotlin
+category: kotlin
+tags: kotlin
 ---
 
 # How you should learn kotlin?
@@ -14,6 +13,53 @@ categories: kotlin
 * And last but not least revision this blog every time you start your new project
 
 if you are into competitive programming you can also read this **[article](https://kotlinlang.org/docs/tutorials/competitive-programming.html)** from official website.
+
+
+
+
+<br><br><br>
+
+
+## Function
+### One line function example:
+```kotlin
+fun start(): String = "OK"
+fun start() = "OK" // type is optinal here it will get automatically infered
+```
+### Supports default Argument
+```kotlin 
+fun functionWithDefaultArg(arg1: String, defaultArg1: Int = 0, defaultArg2:Boolean = false) {
+    ...
+}
+```
+
+
+<br><br><br>
+
+
+## Lambda Function
+* lambda function syntax
+    ```kotlin
+{var1, var2-> var1 * var2}
+{() -> prinln("lambda function with no parameters")} 
+{ it % 2 == 0} // the default single param is it
+{
+    prinln("Multiline")
+    prinln("lambda")
+    prinln("function")
+    "Hello World" // the last expression will be the return value
+}
+    ```
+
+* We don't need to put lambda function in first brackets if we are passing it as last parameter to a higher order function
+    ```kotlin
+// collection.any is the higher order function
+//and we are passing a lamba function in it
+fun anyEven(collection: Collection<Int>) = collection.any { it % 2 == 0}
+    ```
+
+<br><br><br>
+
 
 ## List
 * **MutableList**: Can be modified after the creation
@@ -56,8 +102,22 @@ val colors = listOf ("Red", "Green", "Blue")
 colors.isEmpty() // check if a list is empty : false
 colors.reversed() // returns the list in reversed form : ["Blue", "Green", "Red"]
 colors.sorted() // returns the list in sorted from ["Blue", "Green", "Red"]
+/*
+```
+
+#### Joining array of strings:
+Take a look at the function definition first
+```kotlin
+fun joinToString(
+    separator: String = ", ",
+    prefix: String = "", 
+    postfix: String = "",
+): String
+```
+**Example:**
+```kotlin
 colors.joinToString() // returns "Red, Green, Blue" 
-colors.joinToString("+") // returns "Red+Green+Blue"
+colors.joinToString("+", "[", "]") // returns "[Red+Green+Blue]"
 ```
 
 

@@ -3,21 +3,22 @@ layout: general
 ---
 
 {{content}}
-{%- if site.snippets.size > 0 -%}
+{%- if site.notes.size > 0 -%}
 <h2 class="post-list-heading">{{ page.list_title | default: "Snippets" }}</h2>
 <ul class="post-list">
-    {%- for snippet in site.snippets -%}
+    {%- for note in site.notes -%}
     <li>
         <h3>
-            <a class="post-link" href="{{ snippet.url | relative_url }}">
-                {{snippet.title | escape }}
+            <a class="post-link" href="{{ note.url | relative_url }}">
+                {{note.title | escape }}
             </a>
         </h3>
-        <b>Catagory: </b>{{snippet.category}}
+        <b>Category: </b>{{note.category}}
         {%- if site.show_excerpts -%}
-        {{ snippet.excerpt }}
+        {{ note.excerpt }}
         {%- endif -%}
     </li>
     {%- endfor -%}
 </ul> 
 {% endif %}
+
