@@ -123,49 +123,9 @@ val name = person?.ready { "$firstName $lastName"}
 ```
 val name = person!!.readdy {"$firstname $lastName"}
 ```
-<small style="color: #0d47a1; text-style: bold">Sometime you can use it to make the linter and compiler happy when you are sure that the value is not null but the program doesn't know.</small>
 
+<div class="info">Sometime you can use it to make the linter and compiler happy when you are sure that the value is not null but the program doesn't know.</div>
 
-<br><br><br>
-
-
-## Function
-### One line function example:
-```kotlin
-fun start(): String = "OK"
-fun start() = "OK" // type is optinal here it will get automatically infered
-```
-### Supports default Argument
-```kotlin 
-fun functionWithDefaultArg(arg1: String, defaultArg1: Int = 0, defaultArg2:Boolean = false) {
-    ...
-}
-```
-
-
-<br><br><br>
-
-
-## Lambda Function
-* lambda function syntax
-    ```kotlin
-{var1, var2-> var1 * var2}
-{() -> prinln("lambda function with no parameters")} 
-{ it % 2 == 0} // the default single param is it
-{
-    prinln("Multiline")
-    prinln("lambda")
-    prinln("function")
-    "Hello World" // the last expression will be the return value
-}
-    ```
-
-* We don't need to put lambda function in first brackets if we are passing it as last parameter to a higher order function
-    ```kotlin
-// collection.any is the higher order function
-//and we are passing a lamba function in it
-fun anyEven(collection: Collection<Int>) = collection.any { it % 2 == 0}
-    ```
 
 <br><br><br>
 
@@ -257,6 +217,52 @@ val numberType = if (number % 2 == 1) "Odd" else "Even"
 <br><br><br>
 
 ## Switch statement alternative / When statement
+```kotlin
+when(i) {
+    in 1..10 -> println("Between 1 and 10")
+    20 -> println("Exact 20")
+    15, 16 -> println("15 or 16")
+    else -> println("Unknown")
+}
+```
+**When condition with expression inside first parentheses:**
+```kotlin
+when (x + y) {
+    10 -> println("The sum is 10")
+    15, 20 -> println("The is sum is 14, 20")
+    in 30..35 -> println("The sum is between 30 and 35")
+    else -> println("The sum is unknown")
+}
+```
+**Else if chain with when statement:**
+```kotlin
+when {
+    x > y -> println ("X is bigger")
+    x > 100 -> println("X is greater than 100")
+    x < 5 && y >5 -> println("Perfect")
+    else -> println("y is bigger")
+}
+```
+**When statement with inner block:**
+```kotlin
+when(x) {
+    in 100..200 -> {
+        println("X is in primary stage")
+        println("X is small")
+    }
+    in 200..300 -> {
+        println("X is in secondary stage")
+        println("X is medium")
+    }
+    in 300..400 -> {
+        println("X is in final stage")
+        println("X is big")
+    }
+    
+}
+```
+
+
 
 <br><br><br>
 
@@ -349,6 +355,139 @@ do {
     money -= 10
 } while (money > 1000)
 ```
+
 <br><br><br>
 
 
+## Function
+Nothing new but here are some noticeable things:
+### Compact function example:
+```kotlin
+fun start(): String = "OK"
+fun start() = "OK" // type is optinal here it will get automatically infered
+```
+### Supports default Argument
+```kotlin 
+fun functionWithDefaultArg(arg1: String, defaultArg1: Int = 0, defaultArg2:Boolean = false) {
+    ...
+}
+```
+
+
+<br><br><br>
+
+
+## Lambda Function
+* lambda function syntax
+    ```kotlin
+{var1, var2-> var1 * var2}
+{() -> println("lambda function with no parameters")} 
+{ it % 2 == 0} // the default single param is it
+{
+    println("Multiline")
+    println("lambda")
+    println("function")
+    "Hello World" // the last expression will be the return value
+}
+    ```
+
+* We don't need to put lambda function in first brackets if we are passing it as last parameter to a higher order function
+    ```kotlin
+// collection.any is the higher order function
+//and we are passing a lamba function in it
+fun anyEven(collection: Collection<Int>) = collection.any { it % 2 == 0}
+    ```
+<br><br><br>
+
+## Filter, Map and sequence 
+### Regular filter and map
+```kotlin
+val foods = listOf("Cocacola", "Chatpati", "Orange", "Lemon", "Cabagae", "Ceral", "Chicken", "Potato", "Corn")
+    
+//filtering
+val foodsStartWithC = foods.filter {it[0] == 'C'}
+println("Foods Name starts with C: $foodsStartWithC")
+/*
+Foods Name starts with C: [Cocacola, Chatpati, Cabagae, Ceral, Chicken, Corn]
+*/
+
+val foodMapped = foods.map { 
+    println("The item $it is accessed")
+    it
+}
+```
+
+### Lazy filter and map
+
+It doesn't evaluates all value immediately instead, evaluates each value when they get accessed.<br>
+
+**Lazy Map**
+```kotlin
+// lazy filter
+val lazyFoodsStartWithC = foods.asSequence().filter {it[0] == 'C'}
+println("Foods Name starts with C: $lazyFoodsStartWithC")
+```
+<div class="output">
+Foods Name starts with C: kotlin.sequences.FilteringSequence@2f2c9b19
+</div>
+<br>
+When we will access each items the filter will be applied
+
+```kotlin
+for (food in lazyFoodsStartWithC) {
+    println(food)
+}
+```
+<div class="output">
+Cocacola
+Chatpati
+Cabagae
+Ceral
+Chicken
+Corn
+</div>
+<br>
+
+**Lazy Map:**
+
+```
+var lazyFoodMapped = foods.asSequence().map {
+    println("Item $it accessed")
+    it
+}
+println(lazyFoodMapped)
+```
+<div class="output">
+kotlin.sequences.TransformingSequence@2f2c9b19
+</div>
+
+<br>
+Accessing the first item:
+
+```
+println(lazyFoodMapped.first())
+```
+<div class="output">
+Item Cocacola accessed
+Cocacola
+</div>
+
+<br>
+When we access the last item it have to access the previous items sequentially to reach the last item:
+```kotlin
+println(lazyFoodMapped.last()) 
+```
+<div class="output">
+Item Cocacola accessed
+Item Chatpati accessed
+Item Orange accessed
+Item Lemon accessed
+Item Cabagae accessed
+Item Ceral accessed
+Item Chicken accessed
+Item Potato accessed
+Item Corn accessed
+Corn
+</div>
+
+<div class="warning">A lazy map or filter function can execute from the start to where it is called again again no matter how many times its item get accessed</div>
