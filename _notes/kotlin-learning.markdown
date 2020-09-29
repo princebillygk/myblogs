@@ -529,7 +529,7 @@ val person = Person("Prince Billy Graham", "Karmoker", 1999)
 ```
 
 ### Init block
-We can define as many init block inside the class. All the init blocks will execute when an instance is created. You can assume it as constructor body in c++ or `__init__` in python
+We can define as many init block as we want inside the class. All the init blocks will execute when an instance is created. You can assume it as constructor body in c++ or `__init__` in python
 
 ```kotlin
 class Person(val firstName: String, val lastName: String, val birthYear: Int) {
