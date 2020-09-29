@@ -491,3 +491,98 @@ Corn
 </div>
 
 <div class="warning">A lazy map or filter function can execute from the start to where it is called again again no matter how many times its item get accessed</div>
+
+
+
+<br><br><br>
+
+## Class and Inheritance
+Check this examples
+```kotlin
+class Person {
+    var firstName: String = ""
+    var lastName: String = ""
+    var birtyYear: Int = 0
+}
+
+val person = Person()
+person.firstName = "Prince Billy Graham"
+person.lastName = "Karmoker"
+person.age = 1999
+```
+
+**Shorter Version:** Passing values in constructor and initializing properties in body
+```Kotlin
+class Person(fn: String, ln: String, btyr: Int) {
+	var firstName: String = fn
+	var lastName: String = ln
+	var birtyYear: Int = btyr
+}
+val person = Person("Prince Billy Graham", "Karmoker", 1999)
+```
+
+**Shortest Version:** Passing values,  declaring & initializing properties in default constructor
+
+```kotlin
+class Person(val firstName: String, val lastName: String, val birthYear: Int)
+val person = Person("Prince Billy Graham", "Karmoker", 1999)
+```
+
+### Init block
+We can define as many init block inside the class. All the init blocks will execute when an instance is created. You can assume it as constructor body in c++ or `__init__` in python
+
+```kotlin
+class Person(val firstName: String, val lastName: String, val birthYear: Int) {
+    init {
+        println("New Person: $firstName $lastName")
+    }
+    init {
+        println("age: ${2020 - birthYear}")
+    }
+}
+val person = Person("Prince Billy Graham", "Karmoker", 1999)
+```
+<div class="output">
+New Person: Prince Billy Graham Karmoker
+age: 21
+</div>
+<br>
+
+### Constructor Overloading / Secondary Constructor
+<div class="warning">Avoid function overloading when same thing can be implemented by default argument</div>
+* `var` and `val` as parameter is not allowed
+* The overload constructors have to call the primary constructor using `this` keyword
+* The signature has to be different than other constructors
+
+```kotlin
+class Person(var firstName: String, var lastName: String, var birthYear: Int = 2020) {
+    constructor(age: Int, fn:String, ln:String): this(fn, ln, 2020 - age) {
+        println("Use second constructor")
+    }
+    init {
+        println("\nNew Person: $firstName $lastName")
+        println("age: ${2020 - birthYear}")
+    }
+}
+val person = Person("Prince Billy Graham", "Karmoker", 1999)
+val person2 = Person(23, "Steve Nicholas", "Gonsalves")
+val person3 = Person("Liam", "Patrick")
+```
+
+<div class = "output">
+
+New Person: Prince Billy Graham Karmoker
+age: 21
+
+New Person: Steve Nicholas Gonsalves
+age: 23
+Use second constructor
+
+New Person: Liam Patrick
+age: 0
+</div>
+<br>
+
+### Setter and Getter
+```
+```
