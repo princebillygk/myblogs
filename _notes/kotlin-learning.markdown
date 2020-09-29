@@ -496,7 +496,7 @@ Corn
 
 <br><br><br>
 
-## Class and Inheritance
+## Class
 Check this examples
 ```kotlin
 class Person {
@@ -584,5 +584,127 @@ age: 0
 <br>
 
 ### Setter and Getter
+**Setter function rules**
+* Only applicable to `var` variables
+* The value is passed as argument
+
+
+**Getter function rules** 
+* Applicable to both `var` and `val` variables
+* must return correct type of data
+
+```kotlin
+class Person(var firstName: String, var lastName: String, var birthYear: Int = 2020) {
+    var age: Int
+    	get() = "2020 - birthYear"
+    	set(value) {
+            year = 2020 - value
+        }
+   
+    init {
+        println("$firstName $lastName ($age)")
+    }
+}
 ```
+
+### Property Visibility Modifier
+
+`public`: visible to everywhere<br>
+`internal`: visible through out the module (eg. library, application)<br>
+`protected`: visible to its own class and sub-classes<br>
+`private`: only visible to its own class
+
+eg. We can make birthYear a private variable
+```kotlin
+class Person(var firstName: String, var lastName: String, private var birthYear: Int = 2020) {
+    ...
+}
+```
+
+<br><br><br>
+
+### Inheritance
+We can inherit from the following types of classes
+* **`open` class**: A Class that allows itself to be inherited / subclassed
+* **`sealed` class**: A sealed class is a class that can be subclassed, but only inside the file in which it's declared. If you try to subclass the class in a different file, you get an error.
+* **`abstract` class**: A class that is incomplete and cannot be instantiated.
+* **`interface`**: Not a class but a structure that enforce some properties to be implemented, this provide some default implementation
+
+<br><br><br>
+
+### Singleton Class / Single instance Class
+A class that can be instantiated only once
+* don't required `class` keyword
+* cannot be defined inside local scope
+* other rules are same as regular class
+
+```kotlin
+object Warning{
+    val backGroundColor = "orange"
+    val textColor = "red"
+    val icon = "exclamation"
+}
+```
+<div markdown="1" class="info">
+Singleton class can be used for interface delegation
+
+```kotlin
+interface AlertBoxExtras {
+     val backGroundColor: String
+     val textColor: String
+     val icon: String
+}
+
+object Warning: AlertBoxExtras {
+    override val backGroundColor = "orange"
+    override val textColor = "red"
+    override val icon = "exclamation"
+}
+
+class WarningAlertBox: AlertBoxExtras by Warning {
+    val padding:Int = 10
+    val margin:Int = 10
+    val borderRadius: Int = 10
+    
+    init {
+        draw(this)
+    }
+}
+```
+</div>
+
+<br><br><br>
+
+## Enum Class 
+* Cannot be defined in local class
+* use `name` property to get the name of item
+* use `ordinal` property to get the index
+
+
+**simplest version:**
+```kotlin
+enum class Color{ RED, GREEN, BLUE }
+fun main() {
+    println(Color.BLUE) //BLUE
+    println(Color.BLUE.name) // BLUE
+    println(Color.GREEN.ordinal) // 1
+}
+```
+
+**Customizing value:**
+
+```kotlin
+enum class Color(val rgb: String, val hexInt: Int, val hex:String) {
+        RED("rgb(256, 0, 0)" , 0xFF0000, "#F00"),
+        GREEN("rgb(256, 0, 0)" ,0x00FF00, "#0F0"),
+        BLUE("rgb(256, 0, 0)", 0x0000FF, "#0F0")
+}
+fun main() {
+    println(Color.BLUE) // BLUE
+    println(Color.BLUE.name) // BLUE
+    println(Color.BLUE.rgb) //  rgb(256, 0, 0)
+    println(Color.BLUE.hexInt) // 255
+    println(Color.BLUE.hex) // #0f0
+    println(Color.BLUE.ordinal) //2
+}
 ```
