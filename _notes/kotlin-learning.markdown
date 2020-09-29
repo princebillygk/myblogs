@@ -171,6 +171,11 @@ val colors = listOf ("Red", "Green", "Blue")
 colors.isEmpty() // check if a list is empty : false
 colors.reversed() // returns the list in reversed form : ["Blue", "Green", "Red"]
 colors.sorted() // returns the list in sorted from ["Blue", "Green", "Red"]
+
+contains("purple") // false // returns true if contains the item
+
+/* Return part of the list, from the first index up to but not including the second index. */
+var shortList = colors.sublist(0, 2) // returns listOf("Red", "Green")
 /*
 ```
 
@@ -203,7 +208,101 @@ val squareOfNumbers = Array(5) {it * it} // 0, 1, 4, 9, 16
 ```
 <br><br><br>
 
+## Pair & Triplets
+### Pair
+* We can declare in two way
+    *  using `to` keyword (recommended)
+        ```kotlin 
+        val pair2 = "age" to 23
+        ```
+        <div class="info">
+        Useful to create map
+        </div>
+    * using constructor
+        ```kotlin
+        val pair = Pair("age", 22)
+        ```
+* The items of property can be accessed by `first` and `second` property
+    ```kotlin
+    println(pair.first) // "age"
+    println(pair.second) // 22
+    ```
 
+### Triple
+* Contains three items
+* Access the property using `first`, `second`, `third`
+
+```kotlin
+val triple = Triple("A", "B", "C")
+    println(triple.first) // "A"
+    println(triple.second) // "B"
+    println(triple.third) // "C"
+```
+
+<div markdown=1 class="info"> We can destruct pair and triples like any other objects
+```
+val (item1, item2) = Pair(1, 2)
+val (element1, element2, element3) = Triple("A", "B", "C")
+```
+</div>
+
+<br><br><br>
+
+## Map
+Array of key-value pair
+### Mutable Map
+**Hash Map**: An implementation Mutable Map
+```kotlin
+val usernames = hashMapOf(
+    "google" to "princebillyGK",
+    "microsoft" to "Game_pagla",
+    "facebook"  to "L1M1T_BR3K3R",
+)
+println(usernames["google"]) // princebillyGK
+```
+**Iterating through items:**
+```
+for ((site, id) in usernames) {
+    println("$site: $id")    
+}
+```
+Accessing an key which does not will return **null**
+```kotlin
+println(usernames["nexuspay"]) // null
+println(usernames.get("bkash")) // null
+```
+Get default value when the key doesn't exist
+```kotlin
+println(usernames.getOrDefault("bdjobs", "princebillyGK"))
+```
+Do something else when an key doesn't exist:
+```kotlin
+var username = usernames.getOrElse("reddit") {
+    ...
+}
+```
+**Add new pair**
+```
+usernames.put("twitter", "tastyCake")
+```
+putting multiple values
+```kotlin
+usernames.putAll(mapOf(
+    "github" to "user1234",
+    "heroku" to "1234user"
+))
+```
+**Remove a pair**
+```kotlin
+usernames.remove("twitter")
+```
+## Non mutable map:
+same as mutable map but it is non mutable.
+```kotlin
+val heights = mapOf("Prince" to 5.7, "Liam" to 5.9)
+```
+
+<br><br><br>
 ##  Conditional Statement
 ### if, else if, else
 Not anything new about this. 
@@ -358,6 +457,12 @@ do {
 
 <br><br><br>
 
+## Break & continue
+Works as in regular programming language. But here is something to mention we can use label with it in kotlin
+### Labeled break and continue
+//TODO
+<br><br><br>
+
 
 ## Function
 Nothing new but here are some noticeable things:
@@ -397,6 +502,10 @@ fun functionWithDefaultArg(arg1: String, defaultArg1: Int = 0, defaultArg2:Boole
 //and we are passing a lamba function in it
 fun anyEven(collection: Collection<Int>) = collection.any { it % 2 == 0}
     ```
+<br><br><br>
+
+## Inline function 
+//TODO
 <br><br><br>
 
 ## Filter, Map and sequence 
@@ -550,7 +659,7 @@ age: 21
 
 ### Constructor Overloading / Secondary Constructor
 <div class="warning">Avoid function overloading when same thing can be implemented by default argument</div>
-* `var` and `val` as parameter is not allowed
+* `var` and `val` as parameter is not allowed as argument
 * The overload constructors have to call the primary constructor using `this` keyword
 * The signature has to be different than other constructors
 
@@ -620,16 +729,21 @@ class Person(var firstName: String, var lastName: String, private var birthYear:
     ...
 }
 ```
+### Static property / Companion Object
+//TODO
+### Extension function 
+//TODO
+
 
 <br><br><br>
 
-### Inheritance
+### Inheritance 
 We can inherit from the following types of classes
 * **`open` class**: A Class that allows itself to be inherited / subclassed
 * **`sealed` class**: A sealed class is a class that can be subclassed, but only inside the file in which it's declared. If you try to subclass the class in a different file, you get an error.
 * **`abstract` class**: A class that is incomplete and cannot be instantiated. you can declare properties to be implemented later by using `abstract` keyword before the property
 * **`interface`**: Not a class but a structure that enforce some properties to be implemented, this may provide some default implementation
-
+//TODO
 <br><br><br>
 
 ### Singleton Class / Single instance Class
@@ -676,7 +790,7 @@ class WarningAlertBox: AlertBoxExtras by Warning {
 <br><br><br>
 
 ## Enum Class 
-* Cannot be defined in local class
+* Cannot be defined in local scope
 * use `name` property to get the name of item
 * use `ordinal` property to get the index
 
@@ -708,3 +822,9 @@ fun main() {
     println(Color.BLUE.ordinal) //2
 }
 ```
+<br><br><br>
+
+
+## Generic
+//TODO
+### in type and out type //TODO
