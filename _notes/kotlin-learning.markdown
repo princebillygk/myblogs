@@ -627,8 +627,8 @@ class Person(var firstName: String, var lastName: String, private var birthYear:
 We can inherit from the following types of classes
 * **`open` class**: A Class that allows itself to be inherited / subclassed
 * **`sealed` class**: A sealed class is a class that can be subclassed, but only inside the file in which it's declared. If you try to subclass the class in a different file, you get an error.
-* **`abstract` class**: A class that is incomplete and cannot be instantiated.
-* **`interface`**: Not a class but a structure that enforce some properties to be implemented, this provide some default implementation
+* **`abstract` class**: A class that is incomplete and cannot be instantiated. you can declare properties to be implemented later by using `abstract` keyword before the property
+* **`interface`**: Not a class but a structure that enforce some properties to be implemented, this may provide some default implementation
 
 <br><br><br>
 
