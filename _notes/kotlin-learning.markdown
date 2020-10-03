@@ -13,24 +13,49 @@ tags: kotlin
 
 # How you should learn kotlin?
 
-* If you are a python programmer you must make use of **[Khan Academy kotlin course (text based)](https://khan.github.io/kotlin-for-python-developers/)** - I really get helped from it.
+* If you are a python programmer you must make use of **[Khan Academy kotlin course (text based)](https://khan.github.io/kotlin-for-python-developers/)** or read from **[this same content but better ui](https://kotlinlang.org/docs/tutorials/kotlin-for-py/introduction.html)** - I really get helped from it.
 * **[Go through the codelab courses](https://developer.android.com/courses/basic-android-kotlin-training/overview)** - you can skip the android specific courses for now. if you are video guy then this **[Udacity bootcamp in kotlin by google](https://classroom.udacity.com/courses/ud9011)** is the equavalent of the textbase kotlin bootcamp codelab course.
 * Here's the official website **[documentation](https://kotlinlang.org/docs/reference/)** - at least go through once
 * And last but not least revision this blog every time you start your new project
 
 if you are into competitive programming you can also read this **[article](https://kotlinlang.org/docs/tutorials/competitive-programming.html)** from official website.
 
+<br><br><br>
+
+## Lets be traditional and start from "Hello World" program:
+```kotlin
+fun main(args: Array<String>) {
+    println("Hello World")
+}
+```
+Here main function takes a array of string as argument which are commandline arguments
+<br><br><br>
+
+## Naming identfiers:
+<div class="info">It is better to keep identifiers names lowerCamelCase</div>
+
+**Extra:** We can also declare natural looking identifiers by enclosing it inside a pair of backtick
+
+```kotlin
+val `WOW!! this is an identifier` = "Hello World"
+println(`WOW!! this is an identifier`)
+```
+<div class="output">
+Hello World
+</div>
+
+
 
 <br><br><br>
 ## Variable
 * **Run time constant**: Variables which can be **assigned only once**
     ```kotlin
-val firstname = "Prince Billy Graham"
+    val firstname = "Prince Billy Graham"
     ```
 * Variable which can be assigned any number of times
     ```kotlin
-var age = 22
-++ age
+    var age = 22
+    ++ age
     ```
 
 <br><br><br>
@@ -476,6 +501,30 @@ fun functionWithDefaultArg(arg1: String, defaultArg1: Int = 0, defaultArg2:Boole
 }
 ```
 
+### Support variable number of args using `vararg` keyword
+* Always keep it as last parameter
+
+```kotlin
+fun main() {
+    println(batchStringCaseChanger("UPPER", "Hello World", "princebillyGK", "Hruaaaaah", "WOW"))
+    println(batchStringCaseChanger("LOWER", "Hello World", "princebillyGK", "Hruaaaaah", "WOW"))
+    println(batchStringCaseChanger("CAPITAl", "Hello World", "princebillyGK", "Hruaaaaah", "WOW"))
+}
+
+fun batchStringCaseChanger(case:String, vararg strings: String): List<String>  {
+	when(case) {
+        "UPPER" -> return strings.map {it.toUpperCase()}
+        "LOWER" -> return strings.map {it.toLowerCase()}
+        else  -> return strings.map {it.capitalize()} 
+    }
+}
+```
+<div class = "output">
+[HELLO WORLD, PRINCEBILLYGK, HRUAAAAAH, WOW]
+[hello world, princebillygk, hruaaaaah, wow]
+[Hello World, PrincebillyGK, Hruaaaaah, WOW]
+</div>
+
 
 <br><br><br>
 
@@ -505,6 +554,66 @@ fun anyEven(collection: Collection<Int>) = collection.any { it % 2 == 0}
 ## Inline function 
 //TODO
 <br><br><br>
+
+
+### Utility Function
+//TODO
+## Run function {}
+Generally used for null safey
+```kotlin
+val result = maybeNull?.run { functionThatCanNotHandleNull(this) }}
+```
+### Let 
+Same as run but with ordinary lamda function. just a syntatic variation
+```kotlin
+val result = someExpression?.let {
+   firstFunction(it)
+   it.memberFunction() + it.memberProperty
+}
+```
+### With
+wanna skip the object name every time you access its property?
+```kotlin
+val result = with(someExpression) {
+   firstFunction(this)
+   memberFunction() + memberProperty
+}
+```
+### Apply
+Same as run but the bonus is it returns the object itself infact we can also create a apply function chain `object.apply().apply()...`
+```kotlin
+maybeNull?.apply {
+    firstFunction(this)
+    secondFunction(this)
+    memberPropertyA = memberPropertyB + memberFunctionA()
+}?.memberFunctionB()
+```
+### Also
+Same as apply but uses a ordinary lamda instead, just a syntatic variation
+```kotlin
+maybeNull?.also {
+    firstFunction(it)
+    secondFunction(it)
+    it.memberPropertyA = it.memberPropertyB + it.memberFunctionA()
+}?.memberFunctionB()
+```
+
+### takeif
+Runs a function if a condition is true.
+```kotlin
+val result = someExpression.takeIf { it >= 42 } ?.let { it * it }
+```
+here it is the object someExpression itself
+
+### takeUnless
+Works same as takeif but here the condition has to be false to make the function run
+
+```kotlin
+val result = someExpression.takeUnless{ it >= 42 } ?.let { it / it }
+```
+
+<br><br><br>
+
 
 ## Filter, Map and sequence 
 ### Regular filter and map
@@ -716,7 +825,7 @@ class Person(var firstName: String, var lastName: String, var birthYear: Int = 2
 
 ### Property Visibility Modifier
 
-`public`: visible to everywhere<br>
+`public`: visible to entire codebase<br>
 `internal`: visible through out the module (eg. library, application)<br>
 `protected`: visible to its own class and sub-classes<br>
 `private`: only visible to its own class
@@ -727,8 +836,62 @@ class Person(var firstName: String, var lastName: String, private var birthYear:
     ...
 }
 ```
+### Lateinit
+* Allows user to declare a propery variable without value and asign something to it letter
+* only var is allowed `lateinit var`
+* if we access lateinit variable without assigning it we will get error in runtime
+
+```kotlin
+lateint var title: String
+```
+too check if the lateinit variable is initialized or not we can check it like this: 
+```kotlin
+if (::title.isInitialized) {
+    printlin(title)
+}
+```
+### Infix function inside class
+```kotlin
+infix fun marry(spouse: Person) {
+    println("$name and ${spouse.name} are getting married!")
+}
+```
+### Operator overloading
+
+```kotlin 
+operator fun plus(spouse: Person) {
+    println("$name and ${spouse.name} are getting married!")
+}
+lisa + anne // Prints "Lisa and Anne are getting married!"
+
+val lisa = Person("Lisa")
+val anne = Person("Anne")
+lisa marry anne // Prints "Lisa and Anne are getting married!"
+```
+
 ### Static property / Companion Object
-//TODO
+<div class="info">Keeping factory in companion object is a good practice</div>
+
+```kotlin
+class Car(val horsepowers: Int) {
+    companion object Factory {
+        val cars = mutableListOf<Car>()
+
+        fun makeCar(horsepowers: Int): Car {
+            val car = Car(horsepowers)
+            cars.add(car)
+            return car
+        }
+    }
+}
+```
+we can access companion objects directly or through its name
+
+```kotlin
+val car = Car.makeCar(150) //accessing directly
+println(Car.Factory.cars.size) // accesing through name
+```
+
 ### Extension function 
 //TODO
 
@@ -787,6 +950,10 @@ class WarningAlertBox: AlertBoxExtras by Warning {
 
 <br><br><br>
 
+## Data Class
+//TODO
+<br><br><br>
+
 ## Enum Class 
 * Cannot be defined in local scope
 * use `name` property to get the name of item
@@ -822,7 +989,30 @@ fun main() {
 ```
 <br><br><br>
 
+## Try Catch
+//TODO
 
+<br><br><br>
+
+## import
+```kotlin
+import content.*
+import content as alias
+```
+```kotlin
+import content.Exercise
+import content.Exercise as alias
+```
+<br><br><br>
+## Visibility modifier
+
+`public` (or omitted): visible to entire codebase <br>
+`internal`: visible inside a module <br>
+`private`: visible inside same file <br>
+
+
+
+<br><br><br>
 ## Generic
 //TODO
 ### in type and out type //TODO
