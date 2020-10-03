@@ -23,7 +23,7 @@ if you are into competitive programming you can also read this **[article](https
 
 <br><br><br>
 ## Variable
-* **Run time constant**: Variables that which can be **assigned only once**
+* **Run time constant**: Variables which can be **assigned only once**
     ```kotlin
 val firstname = "Prince Billy Graham"
     ```
@@ -124,7 +124,7 @@ val name = person?.ready { "$firstName $lastName"}
 val name = person!!.readdy {"$firstname $lastName"}
 ```
 
-<div class="info">Sometime you can use it to make the linter and compiler happy when you are sure that the value is not null but the program doesn't know.</div>
+<div class="info">Sometime you can use null assertion operator to make the linter and compiler happy when you are sure that the value is not null but the program doesn't know.</div>
 
 
 <br><br><br>
@@ -160,7 +160,7 @@ var colors = mutableListOf("purple", "green", "orange")
     // Removing an item that exits will return true  
     colors.remove("red") // true
     // Removing an item that doesn't exist will return false
-    color.remove("black") //false
+    colors.remove("black") //false
     ```
 * **Removing a item using index:** `colors.removeAt(0)`
 * **Remove all items:** `colors.clear()`
@@ -171,8 +171,6 @@ val colors = listOf ("Red", "Green", "Blue")
 colors.isEmpty() // check if a list is empty : false
 colors.reversed() // returns the list in reversed form : ["Blue", "Green", "Red"]
 colors.sorted() // returns the list in sorted from ["Blue", "Green", "Red"]
-
-contains("purple") // false // returns true if contains the item
 
 /* Return part of the list, from the first index up to but not including the second index. */
 var shortList = colors.sublist(0, 2) // returns listOf("Red", "Green")
@@ -266,7 +264,7 @@ for ((site, id) in usernames) {
     println("$site: $id")    
 }
 ```
-Accessing an key which does not will return **null**
+Accessing an key which does not exists will return **null**
 ```kotlin
 println(usernames["nexuspay"]) // null
 println(usernames.get("bkash")) // null
@@ -292,7 +290,7 @@ usernames.putAll(mapOf(
     "heroku" to "1234user"
 ))
 ```
-**Remove a pair**
+**Remove a pair by key**
 ```kotlin
 usernames.remove("twitter")
 ```
@@ -465,7 +463,7 @@ Works as in regular programming language. But here is something to mention we ca
 
 
 ## Function
-Nothing new but here are some noticeable things:
+Nothing new but here are but here's some noticeable things:
 ### Compact function example:
 ```kotlin
 fun start(): String = "OK"
@@ -485,7 +483,7 @@ fun functionWithDefaultArg(arg1: String, defaultArg1: Int = 0, defaultArg2:Boole
 ## Lambda Function
 * lambda function syntax
     ```kotlin
-{var1, var2-> var1 * var2}
+{var1, var2-> var1 * var2} //taking var1 and var2 as argument and returning their product
 {() -> println("lambda function with no parameters")} 
 { it % 2 == 0} // the default single param is it
 {
