@@ -150,7 +150,11 @@ The zero value is
 `complex64`, `complex128` <br>
 
 ## Type conversion
-Type conversion in go is done by T(v) wher T is the type and v is the value
+Type conversion in go is done by T(v) where T is the type and v is the value
+```go
+x int = 4
+f float64 = float64(4)
+```
 
 ## Constant 
 Constant in typescript can be string boolean or numeric values. Constant can not be declared using := 
