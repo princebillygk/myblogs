@@ -120,7 +120,7 @@ x := 2
 i, j := 23, "Hello World"
 ```
 
-### Declaring multple var at once 
+### Declaring multple variable of differnet type at once 
 
 ```go
 var (
