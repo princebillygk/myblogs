@@ -14,10 +14,10 @@ import "fmt"
 #### Recommended way
 
 ```go 
-import {
+import (
     "fmt"
     "math/rand"
-    }
+    )
 ```
 The other way is
 
@@ -162,3 +162,171 @@ Constant in typescript can be string boolean or numeric values. Constant can not
 ```go
 const Pi = 3.1416
 ```
+<br><br><br>
+## Loops
+### For loop in go
+Using shorthand syntax is recommended. 
+
+```go
+for i := 0; i < 10; i++ {
+	sum += i
+}
+fmt.Println(sum)
+```
+### While alternative in Go:
+we will use `for` keyword to implement a while loop but this time we will drop the intialization, increment and the semicolons
+```go
+for sum < 100 {
+	sum += sum
+}
+```
+### Some other for loop varialation 
+An infinite for loop
+
+```go 
+for {
+	fmt.Println("Hello World")
+}
+```
+
+}
+
+
+### One weird thing about golang
+`++` and `--` can only be useable as postfix
+
+```diff
++ x++ //right
+- ++x //wrong
++ y-- //right
+- --y //wrong
+```
+
+<br><br><br>
+## If else
+If statement condition doesn't need to be surrended by ()
+
+```go
+func isOdd(number int) bool {
+	if number&1 == 1 {
+		return true
+	}
+	return false
+}
+```
+
+### The damn interesting thing about go if statement
+We can start with a short statement that will be executed before matching the condition
+
+```go
+func getRoot(a float64, b float64, c float64) string {
+	if d := b*b - 4*a*c; d < 0 {
+		fmt.Println(d)
+		divider := 2 * a
+		imginaryPart := math.Sqrt(-d) / divider
+		realPart := -b / divider
+		return fmt.Sprintf("x1 = %.3v + %.3vi, x2 = %.3v - %.3vi",
+			realPart, imginaryPart, realPart, imginaryPart)
+	} else {
+		sqrtOfD := math.Sqrt(d)
+		x1 := (-b + sqrtOfD) / (2 * a)
+		x2 := (-b - sqrtOfD) / (2 * a)
+		return fmt.Sprintf("x1 = %.3v, x2 = %.3v", x1, x2)
+	}
+}
+```
+
+if else chain example
+
+```go 
+os := runtime.GOOS
+
+if os == "darwin" {
+	fmt.Println("OS X. ")
+} else if os == "linux" {
+	fmt.Println("Linux.")
+} else {
+	fmt.Printf("%s.\n", os)
+}
+```
+
+<br><br><br>
+## Switch
+
+```go
+package main
+
+import (
+	"fmt"
+	"runtime"
+)
+
+func main() {
+	fmt.Println("Go runs on ")
+	switch os := runtime.GOOS; os {
+
+	case "darwin":
+		fmt.Println("OS.X.")
+	case "linux":
+		fmt.Println("Linux.")
+	default:
+		fmt.Println("%s\n", os)
+	}
+}
+```
+### The damn think about go switch statement 
+Go switch statement doesn't need to use break statement of each cases. break is automatic for each cases. Switch statement also supports any type
+#### We can use switch as else if chain
+
+```go 
+switch t := time.Now(); {
+case t.Hour() < 12:
+	fmt.Println("Good Morning\n")
+case t.Hour() < 17:
+	fmt.Println("Good Afternoon\n")
+default:
+	fmt.Println("Good Evening")
+}
+```
+
+<br><br><br>
+
+## Defer (Bang!! new concept)
+Evaluates but Holds the execution fo statement until the surrounding function return
+```go
+func main() {
+	defer fmt.Println("World")
+	fmt.Println("Hello")
+}
+```
+<div class="output">
+World
+Hello
+</div>
+### Weird thing about defer
+Defer function calls are pushed into stack. First in lastout system
+```go
+fmt.Println("counting")
+for i := 0; i < 10; i++ {
+	defer fmt.Println(i)
+}
+fmt.Println("done")
+```
+<div class="output">
+counting
+done
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+</div>
+
+
+
+
