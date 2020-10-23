@@ -138,6 +138,7 @@ The zero value is
     0 //for numeric types
     false //for boolean types
     "" // Empty String for string types
+	nil //for slice
 ```
 
 <br><br><br>
@@ -435,7 +436,7 @@ Array is what you already learned in c/c++. Its size is static. In fact array ca
 ```go 
 var a[10]int  // declares a array "a" of 10 items. each item intialized to zero value
 ```
-## We can also intialize array items using {}
+### We can also intialize array items using {}
 ```go
 primes := [6]int{2, 3, 5, 7, 11, 13}
 ```
@@ -458,5 +459,308 @@ func main() {
 	fmt.Println(primes)
 }
 ```
+<div class="info" markdown=1>
+###  Another thing that I find a bit weird while coding
+
+```diff
+  names := [4]string{
+  	"John",
+  	"Paul",
+  	"Gorge",
+- 	"Ringo"
+  }
+```
+<div class="output">
+# command-line-arguments
+./test.go:10:10: syntax error: unexpected newline, expecting comma or }
+</div>
+<br>
+This code is not ok, but why? we missed a comma at the last element and closed the parenthesis at next line. And this will lead to an error. This error canbe fix by adding a comma(,) after the last item.
+
+```diff
+  names := [4]string{
+ 	"John",
+ 	"Paul",
+ 	"Gorge",
++ 	"Ringo",
+}
+```
+</div>
+
+ 
+<br><br><br>
+
+## Slices
+
+Slices don't have a size limit. Its size is dynamic
+We can form a size using ":" from another linear datastructure, or by specifying the values. The [:] range is [start:end - 1]
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	primes := [6]int{2, 3, 5, 7, 11, 13}
+	var even []int = []int{2, 4, 6, 8, 10}
+	fmt.Printf("%T\n", even)
+	fmt.Println(even)
+	var s []int = primes[1:4]
+
+	var q []int = s[2:3]
+	fmt.Printf("%T\n", s)
+	fmt.Println(s)
+	fmt.Printf("%T\n", q)
+	fmt.Println(q)
+}
+```
+<div class="info" markdown=1>
+The [:] looks like python range but there is a major difference between them. When using [:] to form a slice it doesn't create a new data store, Instead it works like a referece of underlying parent datastructure (eg. array). Infact any change that is done to the slice will also reflect in the underlying array
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	names := [4]string{
+		"John",
+		"Paul",
+		"Gorge",
+		"Ringo",
+	}
+
+	fmt.Println(names)
+
+	a := names[0:2]
+	b := names[1:3]
+	fmt.Println(a, b)
+
+	b[0] = "XXX"
+	fmt.Println(a, b)
+	fmt.Println(names)
+}
+```
+<div class="output">
+[John Paul Gorge Ringo]
+[John Paul] [Paul Gorge]
+[John XXX] [XXX Gorge]
+[John XXX Gorge Ringo]
+</div>
+
+</div>
+
+If we create a struct without slicing a part from an array then. The it will create a array first and then reference it by the struct
+```go
+package main
+
+import "fmt"
+
+func main() {
+	q := []int{2, 3, 5, 7, 11, 13}
+	fmt.Println(q)
+
+	r := []bool{true, false, true, true, false, true}
+	fmt.Println(r)
+
+	s := []struct {
+		i int
+		b bool
+	}{
+		{2, true},
+		{3, false},
+		{5, true},
+		{7, true},
+		{11, false},
+		{13, false},
+	}
+	fmt.Println(s)
+}
+```
+<div class="output">
+[2 3 5 7 11 13]
+[true false true true false true]
+[{2 true} {3 false} {5 true} {7 true} {11 false} {13 false}]
+</div>
+
+We can ommit the lower bound and the upper bound while slicing
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	s := []int{2, 3, 5, 7, 11, 13}
+
+	s = s[1:4]
+	fmt.Println(s)
+
+	s = s[:2]
+	fmt.Println(s)
+
+	s = s[1:]
+	fmt.Println(s)
+
+	s = s[:]
+	fmt.Println(s)
+
+}
+```
+
+<div class="output">
+[3 5 7]
+[3 5]
+[5]
+[5]
+</div>
+
+<div class="info">The zero value for slice is `nil`</div>
+
+###  We can also make use of builtin make function to created a slice of specific len() and cap() of zeroed array
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	a := make([]int, 5)
+	printSlice("a", a)
+
+	b := make([]int, 0, 5)
+	printSlice("b", b)
+
+	c := b[:2]
+	printSlice("c", c)
+
+	d := c[2:5]
+	printSlice("d", d)
+}
+
+func printSlice(s string, x []int) {
+	fmt.Printf("%s len=%d cap=%d %v\n", s, len(x), cap(x), x)
+}
+```
+
+## Two dimensional example
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	board := [][]string{
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+		[]string{"_", "_", "_"},
+	}
+
+	board[0][0] = "X"
+	board[2][2] = "O"
+	board[1][2] = "X"
+	board[1][0] = "O"
+	board[0][2] = "X"
+
+	for i := 0; i < len(board); i++ {
+		fmt.Printf("%s\n", strings.Join(board[i], " "))
+	}
+}
+```
+
+<div class="output">
+X _ X
+O _ X
+_ _ O
+</div>
 
 
+### Appending to slice
+We can append new item to slice. If the slice doesn't have required capacity it will recreate a new array with new size and refernce it from then.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var s []int
+	printSlice(s)
+
+	s = append(s, 0)
+	printSlice(s)
+
+	s = append(s, 1)
+	printSlice(s)
+
+	s = append(s, 2, 3, 4)
+	printSlice(s)
+}
+
+func printSlice(s []int) {
+	fmt.Printf("len=%d cap=%d %v %T\n", len(s), cap(s), s, s)
+}
+```
+
+### Iterating slice using range
+
+The `range` form of the `for` loop iterates over a slice or map. Two values are returned from each iteration. The first one is index and the last one is value
+
+```go
+package main
+
+import "fmt"
+
+var pow = []int{1, 2, 4, 8, 16, 32, 64, 128}
+
+func main() {
+	for i, v := range pow {
+		fmt.Printf("2**%d = %d\n", i, v)
+	}
+}
+```
+<div class="output">
+2**0 = 1
+2**1 = 2
+2**2 = 4
+2**3 = 8
+2**4 = 16
+2**5 = 32
+2**6 = 64
+2**7 = 128
+</div>
+
+We can ommit any of index or value by using "\_". Or if we want only index then we can ommit value
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	pow := make([]int, 10)
+	for i := range pow {
+		pow[i] = 1 << uint(i)
+	}
+
+	for _, value := range pow {
+		fmt.Printf("%d\n", value)
+	}
+}
+```
+
+<div class="output">
+1
+2
+4
+8
+16
+32
+64
+128
+256
+512
+</div>
