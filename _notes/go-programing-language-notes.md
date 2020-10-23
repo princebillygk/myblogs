@@ -5,12 +5,12 @@ category: Programning
 tags: go web api rest
 ---
 
-## Imports and exports
+## Imports 
 ### Importing single package
 ```go
 import "fmt"
 ```
-## Importing multple package
+### Importing multple package
 #### Recommended way
 
 ```go 
@@ -26,10 +26,11 @@ import "fmt"
 import "math/rand"
 ```
 
-
+<br><br><br>
 ## Exporting packages
 A name begins with capital letter is exported this is why we `fmt.Println` instead of `fmt.println`
 
+<br><br><br>
 ## User defined function in go
 Example:
 
@@ -46,7 +47,7 @@ func main() {
 }
 ```
 As in this function x and y are consecutive int paramaters so we can omit type declaration for x.<br>
-**When two or more consecutive named paramaters are of same type we can omit type from all except the last parameter.***
+<div class="info">When two or more consecutive named paramaters are of same type we can omit type from all except the last parameter</div>
 
 ```go 
 package main 
@@ -104,7 +105,7 @@ func swap(a, b string) (x, y string) {
 }
 ```
 
-
+<br><br><br>
 ## Variable declaration
 
 ```go
@@ -139,6 +140,7 @@ The zero value is
     "" // Empty String for string types
 ```
 
+<br><br><br>
 ## Basic Types
 
 `bool`,<br> `string` <br>
@@ -326,7 +328,3 @@ done
 1
 0
 </div>
-
-
-
-
