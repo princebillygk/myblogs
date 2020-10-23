@@ -28,7 +28,7 @@ import "math/rand"
 
 <br><br><br>
 ## Exporting packages
-A name begins with capital letter is exported this is why we `fmt.Println` instead of `fmt.println`
+A name begins with capital letter is exported this is why we use `fmt.Println` instead of `fmt.println`
 
 <br><br><br>
 ## User defined function in go
@@ -111,7 +111,7 @@ func swap(a, b string) (x, y string) {
 ```go
 var c, python, java bool
 var i, j int = 1, 2
-var k string = 3
+var k string = "Hello World"
 var p int
 ```
 
@@ -131,7 +131,7 @@ var (
 )
 ```
 
-variables intialized without value witll be zero value
+variables intialized without value will be zero value
 The zero value is 
 
 ```go
@@ -178,6 +178,7 @@ fmt.Println(sum)
 ### While alternative in Go:
 we will use `for` keyword to implement a while loop but this time we will drop the intialization, increment and the semicolons
 ```go
+sum := 1
 for sum < 100 {
 	sum += sum
 }
@@ -190,8 +191,6 @@ for {
 	fmt.Println("Hello World")
 }
 ```
-
-}
 
 
 ### One weird thing about golang
@@ -328,3 +327,136 @@ done
 1
 0
 </div>
+
+<br><br><br>
+
+## Struct
+Struct declaration:
+
+```go
+package main
+
+import "fmt"
+
+type Vertex struct {
+	X int
+	Y int
+}
+
+func main() {
+	fmt.Println(Vertex{1, 2})
+}
+```
+**accesing struct fields:** We can access struct fields using dot
+```go
+package main
+
+import "fmt"
+
+type Vertex struct {
+	X int
+	Y int
+}
+
+func main() {
+	v := Vertex{1, 2}
+	fmt.Printf("%T\n", v)
+	fmt.Println(v.X)
+	v.X = 4
+	fmt.Println(v.X)
+}
+```
+
+<div class="output">
+main.Vertex
+1
+4
+</div>
+
+We can also access struct fields using struct pointer
+```go
+package main
+
+import "fmt"
+
+type Vertex struct {
+	X int
+	Y int
+}
+
+func main() {
+	v := Vertex{1, 2}
+	p := &v
+	fmt.Printf("%T\n", p)
+	p.X = 1e9
+	fmt.Println(v)
+	fmt.Println(p.Y)    // easy way
+	fmt.Println((*p).Y) // cumbersome approch
+}
+```
+### We can explicilty specify which struct field to initialize using {Name: value}
+
+```go
+v := Vertex {Y: 0} //here X:0 implicit
+v1 := Vertex {} //here X:0 and Y:0
+```
+One more example to be more cleared
+```go 
+package main
+
+import "fmt"
+
+type Vertex struct {
+	X, Y int
+}
+
+var (
+	v1 = Vertex{1, 2}
+	v2 = Vertex{X: 1}
+	v3 = Vertex{}
+	p  = &Vertex{1, 2}
+)
+
+func main() {
+	fmt.Println(v1, p, v2, v3)
+}
+```
+<div class="output">
+{1 2} &{1 2} {1 0} {0 0}
+</div>
+
+
+<br><br><br>
+
+## Array
+Array is what you already learned in c/c++. Its size is static. In fact array cannot be resized but the way of declaration is little different<br>
+`[n]T` Here n is the nubmer of item that the array can hold and T is type
+
+```go 
+var a[10]int  // declares a array "a" of 10 items. each item intialized to zero value
+```
+## We can also intialize array items using {}
+```go
+primes := [6]int{2, 3, 5, 7, 11, 13}
+```
+
+Example:
+
+```go 
+package main
+
+import "fmt"
+
+func main() {
+	var a [2]string
+	a[0] = "Hello"
+	a[1] = "World"
+	fmt.Println(a[0], a[1])
+	fmt.Println(a)
+
+	primes := [6]int{2, 3, 5, 7, 11, 13}
+	fmt.Println(primes)
+}
+```
+
+
