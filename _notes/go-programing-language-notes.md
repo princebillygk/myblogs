@@ -550,7 +550,7 @@ func main() {
 
 </div>
 
-If we create a struct without slicing a part from an array then. The it will create a array first and then reference it by the struct
+If we create a slice without slicing a part from an array then. The it will create a array first and then reference it by the slice
 ```go
 package main
 
@@ -678,6 +678,8 @@ _ _ O
 </div>
 
 
+
+
 ### Appending to slice
 We can append new item to slice. If the slice doesn't have required capacity it will recreate a new array with new size and refernce it from then.
 
@@ -764,3 +766,88 @@ func main() {
 256
 512
 </div>
+
+
+
+
+
+<br><br><br>
+
+## Map
+<div class="info"> 
+0 value of map is nil
+</div>
+Example:
+```go
+package main
+
+import "fmt"
+
+type Vertex struct {
+	Lat, Long float64
+}
+
+var m map[string]Vertex
+
+func main() {
+	m = make(map[string]Vertex)
+	m["Bell Labs"] = Vertex{
+		40.64833, -74.39967,
+	}
+	fmt.Println(m["Bell Labs"])
+}
+```
+Another Example:
+initializing map items:
+
+```go
+package main
+
+import "fmt"
+
+type Vertex struct {
+	Lat, Long float64
+}
+
+var m = map[string]Vertex{
+	"Bell Labs": {40.68, -74.3999},
+	"Google":    {37.42, -122.08408},
+}
+
+func main() {
+	fmt.Println(m)
+}
+```
+
+### Mutating map
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	m := make(map[string]int)
+
+	m["Answer"] = 42
+	fmt.Println("The value ", m["Answer"])
+
+	m["Answer"] = 48
+	fmt.Println("The value ", m["Answer"])
+
+	delete(m, "Answer")
+	fmt.Println("The value, ", m["Answer"])
+
+	v, ok := m["Answer"]
+	fmt.Println("The value, ", v, "Present? ", ok)
+} 
+```
+<div class="output">
+The value  42
+The value  48
+The value,  0
+The value,  0 Present?  false
+</div>
+
+
+
