@@ -105,6 +105,86 @@ func swap(a, b string) (x, y string) {
 }
 ```
 
+### Higher-order function
+
+We can use function as argument and return value
+```go
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func compute(fn func(float64, float64) float64) float64 {
+	return fn(3, 4)
+}
+
+func main() {
+	hypot := func(x, y float64) float64 {
+		return math.Sqrt(x*x + y*y)
+	}
+	fmt.Println(hypot(5, 12))
+	fmt.Println(compute(hypot))
+	fmt.Println((math.Pow))
+}
+```
+
+## Function closure
+A closure is a function valuew that refrence variable from outside of its body.
+
+```go 
+package main
+
+import "fmt"
+
+func adder() func(int) {
+	sum := 0
+	return func(x int) {
+		sum += x
+		fmt.Println(sum)
+	}
+}
+
+func main() {
+	pos, neg := adder(), adder()
+	for i := 0; i < 10; i++ {
+		fmt.Println("pos:")
+		pos(i) // will change sum variable of its own parent function
+		fmt.Println("neg:")
+		neg(-2 * i) // will change sum variable  of its own parent function
+	}
+}
+```
+
+An fibonancy generator example using function closure
+
+```go
+package main
+
+import "fmt"
+
+func fibonacci() func() int {
+	old := 1
+	curr := 0
+	return func() int {
+		temp := curr
+
+		curr = curr + old
+		old = temp
+		return temp
+	}
+}
+
+func main() {
+	f := fibonacci()
+
+	for i := 0; i < 10; i++ {
+		fmt.Println(f())
+	}
+}
+```
+
 <br><br><br>
 ## Variable declaration
 
@@ -848,6 +928,7 @@ The value  48
 The value,  0
 The value,  0 Present?  false
 </div>
+
 
 
 
