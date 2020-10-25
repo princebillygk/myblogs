@@ -931,4 +931,484 @@ The value,  0 Present?  false
 
 
 
+## Class alternative in go Method
+Method is like regular function but with special receiver argument. A receiver appears in its own argument list between the func keyboard and the method name.
+
+
+
+
+<div class="info">
+**One important thing**: Method reciever has to be exist in the same package where we were writting the method. We cannot declare a method with a receiver whose type is defined in another packge (which include build-in types such as float64)
+</div>
+
+```go
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Vertex struct {
+	X, Y float64
+}
+
+func (v Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func main() {
+	v := Vertex{3, 4}
+	fmt.Println(v.Abs())
+}
+```
+
+
+We can also modify the reciever argument if we use pointer reciever arugment
+```go
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Vertex struct {
+	X, Y float64
+}
+
+func (v Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func (v *Vertex) Scale(f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+}
+
+func main() {
+	v := Vertex{3, 4}
+	v.Scale(10)
+	fmt.Println(v.Abs())
+}
+```
+
+## Choosing a pointer or receiver 
+
+* To modify its receiver value
+* Avoid copying large object
+
+
+## Interfaces
+
+An interface type is defined as a set of method signature
+
+```go
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Abser interface {
+	Abs() float64
+}
+
+func main() {
+	var a Abser
+	f := MyFloat(-math.Sqrt2)
+	v := Vertex{3, 4}
+
+	a = f  // a MyFloat implements absyer
+	a = &v // a *Vertex implements
+
+	// In the following line, v is a Vertex (not *Vertex)
+	// and doesn't implement Abser
+	// a = v
+
+	fmt.Println(a.Abs())
+}
+
+type MyFloat float64
+
+func (f MyFloat) Abs() float64 {
+	if f < 0 {
+		return float64(-f)
+	}
+	return float64(f)
+}
+
+type Vertex struct {
+	X, Y float64
+}
+
+func (v *Vertex) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+```
+
+## EmptyInterface
+
+Generally used with functions that excepts argument of all types
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	var i interface{}
+	describe(i)
+
+	i = 42
+	describe(i)
+
+	i = "hello"
+	describe(i)
+}
+
+func describe(i interface{}) {
+	fmt.Printf("(%v, %T)\n", i, i)
+}
+```
+
+
+
+## Type  assertion 
+ t := i.(T)
+
+here i is a interface if i is of Type t then it will be asigned to variable to otherwise will generate a panic.
+to avoid panic we can also ask to get a second return value, that will tell be true if the type matahes otherwise will return false
+
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var i interface{} = "hello"
+
+	s := i.(string)
+	fmt.Println(s)
+
+	s, ok := i.(string)
+	fmt.Println(s, ok)
+
+	f, ok := i.(float64)
+	fmt.Println(f, ok)
+
+	f = i.(float64)
+	fmt.Println(f)
+}
+```
+
+## Type switches
+
+```go
+package main
+
+import "fmt"
+
+func do(i interface{}) {
+	switch v := i.(type) {
+	case int:
+		fmt.Printf("Twice %v is %v\n", v, v*2)
+	case string:
+		fmt.Printf("%q is %v bytes long\n", v, len(v))
+	default:
+		fmt.Printf("I don't know about type %T!\n", v)
+	}
+}
+
+func main() {
+	do(21)
+	do("Hello")
+	do(true)
+}
+```
+
+
+## The Stringer interface `toString` alternative
+
+```go
+type Stringer interface {
+    String() string
+}
+```
+The fmt package and many others look for this interface to print values
+
+Example: 
+
+```go 
+package main
+
+import "fmt"
+
+type IPAddr [4]byte
+
+func main() {
+	hosts := map[string]IPAddr{
+		"loopback":  {127, 0, 0, 1},
+		"googleDNS": {8, 8, 8, 8},
+	}
+
+	for name, ip := range hosts {
+		fmt.Printf("%v: %v\n", name, ip)
+	}
+}
+
+func (ip IPAddr) String() string {
+	return fmt.Sprintf("%v.%v.%v.%v", ip[0], ip[1], ip[2], ip[3])
+}
+```
+## Errors
+
+```go 
+type error interface {
+	Error() string
+}
+```
+
+```go
+i, err := strconv.Atoi("42")
+if err != nil {
+    fmt.Printf("couldn't convert number: %v\n", err)
+    return
+}
+fmt.Println("Converted integer:", i)
+```
+A nil error denotes success; a non-nil error denotes failure.
+
+```go 
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+type MyError struct {
+	When time.Time
+	What string
+}
+
+func (e *MyError) Error() string {
+	return fmt.Sprintf("at %v, %s", e.When, e.What)
+}
+
+func run() error {
+	return &MyError{
+		time.Now(),
+		"it didn't work.",
+	}
+}
+
+func main() {
+	if err := run(); err != nil {
+		fmt.Println(err)
+	}
+} 
+```
+ Another example:
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+type ErrNegativeSqrt float64
+
+func (e ErrNegativeSqrt) Error() string {
+	return fmt.Sprintf("Cannot Sqrt negative number: %v", float64(e))
+}
+
+func Sqrt(x float64) (float64, error) {
+	if x < 0 {
+		return 0, ErrNegativeSqrt(x)
+	}
+	var z float64 = x / 2
+	var prevZ = z
+
+	z = z - (z*z-x)/(2*z)
+
+	for ; prevZ-0.001 < z && z < prevZ-0.001; z -= (z*z - x) / (2 * z) {
+		fmt.Println(z)
+		prevZ = z
+	}
+	return z, nil
+}
+
+func main() {
+	fmt.Println(Sqrt(2))
+	fmt.Println(Sqrt(-2))
+}
+
+```
+
+## goroutine
+
+Something like javascript await keyword
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func say(s string) {
+
+	for i := 0; i < 5; i++ {
+		time.Sleep(100 * time.Millisecond)
+		fmt.Println(s)
+	}
+
+}
+
+func main() {
+	go say("world")
+	say("hello")
+}
+```
+
+
+
+### Channel
+
+```
+package main
+
+import "fmt"
+
+func sum(s []int, c chan int) {
+	sum := 0
+	for _, value := range s {
+		sum += value
+	}
+	c <- sum
+}
+
+func main() {
+	s := []int{7, 2, 8, -9, 4, 0}
+	c := make(chan int)
+	go sum(s[:len(s)/2], c)
+	go sum(s[len(s)/2:], c)
+	x, y := <-c, <-c
+	fmt.Println(x, y, x+y)
+} 
+```
+
+### Buffered channel
+
+Overkilling a buffer channel will create a fatal error
+
+```go 
+package main
+
+import "fmt"
+
+func main() {
+	ch := make(chan int, 2)
+	ch <- 1
+	ch <- 2
+	fmt.Println(<-ch)
+	fmt.Println(<-ch)
+}
+```
+
+## Range and close() channel
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func fibonacci(n int, c chan int64) {
+	var x, y int64 = 0, 1
+	for i := 0; i < n; i++ {
+
+		c <- x
+		x, y = y, x+y
+	}
+	close(c)
+}
+
+func main() {
+	c := make(chan int64, 50)
+	go fibonacci(cap(c), c)
+	for i := range c {
+		fmt.Println(i)
+	}
+}
+```
+## Select 
+The select statement lets a goroutine wait on multiple communication operations.
+
+A select blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple are ready.
+
+```go
+package main
+
+import "fmt"
+
+func fibonacci(c, quit chan int) {
+	x, y := 0, 1
+	for {
+		select {
+		case c <- x:
+			x, y = y, x+y
+
+		case <-quit:
+			fmt.Println("quit")
+			return
+		}
+	}
+}
+
+func main() {
+	c := make(chan int)
+	quit := make(chan int)
+	go func() {
+		for i := 0; i < 10; i++ {
+			fmt.Println(<-c)
+		}
+		quit <- 0
+	}()
+	fibonacci(c, quit)
+}
+```
+Select with default statement
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	tick := time.Tick(100 * time.Milisecond)
+	boom := time.After(500 * time.Milisecond)
+
+	for {
+		select {
+		case <-tick:
+			fmt.Println("tick.")
+		case <-boom:
+			fmt.Println("Boom!")
+			return
+		default:
+			fmt.Println(" ")
+			time.Sleep(50 * time.Millisecond)
+		}
+	}
+}
+```
 
