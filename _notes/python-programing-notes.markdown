@@ -4,6 +4,22 @@ title:  "Python Programming Notes"
 category: Python
 tags: python
 ---
+# Hello world
+```python
+print("Hello world")
+print("Second line")
+```
+Notice that these two line are printed in different lines by default becuase print function automatically adds a newline character after it has done printing the first parmeter. Now what if we want to end with a diffrent character like " " (space) ? 
+```python
+print("Hello world", end=" ")
+prinnt("Second line")
+```
+Notice that both print functions is displaying its output in the sameline
+
+# One thing that you should always remind while choosing python
+* Python is a interpreted language so it good for writting short scripts, testing, problem solving
+* Python is not suitable for big software and insfrastructure because there will be more chance to error.
+
 
 # Mathemetical Operators:
 ```python
@@ -16,6 +32,11 @@ a // b # Integer part of the integer division of a by b
 a % b # The remainder part of the integer division of a by b
 ```
 
+# Logical Operators
+* `and` requires both expression to be true
+* `or` requires atleast one expression to be true
+* `not` inverts the result of a expression
+
 
 ## Variable Types
 
@@ -27,6 +48,24 @@ a % b # The remainder part of the integer division of a by b
 
 **string:** Stores strings
 
+### Strings 
+Strings in python is immutable. We cannot modify a single index of a string. Instead we have to assign a new string.
+We can read a single index of a string by using string index
+```python
+str = "Prince Billy Graham Karmoker"
+print(str[4]) # prints "c"
+```
+We can also know the index of first occurence of a substring in a string
+```python
+str = "Prince Billy Graham Karmoker"
+str.index("Graham") # prints "13"
+```
+We can also use `in` keyword to find if a substring exist in another string
+```python
+"Billy" in "Prince Billy Graham Karmoker" # return true
+"Winy" in "Prince Billy Graham Karmoker" # return false
+
+
 ### Variable naming rules
 
 1) Underscore (\_), numbers and letters are allowed in a variable name
@@ -35,7 +74,7 @@ a % b # The remainder part of the integer division of a by b
 
 
 
-## Know the type of a function 
+## Know the type of a variable
 To know the type of a specific function we can use the `type(variable)` function 
 ```python
 print(type(2)) # Prints "int"
@@ -472,6 +511,9 @@ if age is 1: # same as if (age === 1)
 str.upper() #converts string to uppercase
 str.title() #capitalizes only first letter and makes lower case all other letters
 str.lower() #converts string to lowercase
+str.count("e") # Count the number of occurance of a certain substring
+str.index("r") # Get the index of first occurance of a substring
+str.endswith("r") # Check if a string ends with certain substring
 
 #strip
 str.strip() #removes whitespaces arround the string
@@ -481,9 +523,34 @@ str.rstrip() #removes whitespaces only from right side
 #checker
 str.isdigit() # check if str is digit "4545.34" -> False "3432" -> True "err324" -> False
 str.isalpha() # checks if a string contains only letters
+str.isnumeric() # Checks is a number is numeric
+
+## String Formating
+```python
+print("Hello {}, your luck number is {}".format(name, number)
+print("Hello {name}, your luck number is {number}".format(name=name, number=number)) 
+```
+### Format spcifier
+```python
+print("This is two decimal point number {:.2f}.format(34,34343))
+```
+
+
+
+Expr | Meaning | Example 
+--- | --- | --- 
+{:d} | integer value | '{:d}'.format(10.5) → '10' 
+{:.2f} | floating point with that many decimals | '{:.2f}'.format(0.5) → '0.50' 
+{:.2s} | string with that many characters | '{:.2s}'.format('Python') → 'Py' 
+{:<6s} | string aligned to the left that many spaces | '{:<6s}'.format('Py') → 'Py    ' 
+{:>6s} | string aligned to the right that many spaces | '{:>6s}'.format('Py') → '    Py' 
+{:^6s} | string centered in that many spaces | '{:^6s}'.format('Py') → '  Py ' 
 
 # join array of string
 "seperator".join(["hello", "world"]) # "Helloseperatorworld"
+
+# split a string
+"This is  me".split() # returns ["This", "is", "me"]
 ```
 
 ### list
