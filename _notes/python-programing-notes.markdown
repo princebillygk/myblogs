@@ -64,7 +64,10 @@ We can also use `in` keyword to find if a substring exist in another string
 ```python
 "Billy" in "Prince Billy Graham Karmoker" # return true
 "Winy" in "Prince Billy Graham Karmoker" # return false
+<<<<<<< HEAD
 ```
+=======
+>>>>>>> f9ee4aece27ab09776b16438239f58d9a6139f66
 
 
 ### Variable naming rules
@@ -540,6 +543,9 @@ if age is 1: # same as if (age === 1)
 str.upper() #converts string to uppercase
 str.title() #capitalizes only first letter and makes lower case all other letters
 str.lower() #converts string to lowercase
+str.count("e") # Count the number of occurance of a certain substring
+str.index("r") # Get the index of first occurance of a substring
+str.endswith("r") # Check if a string ends with certain substring
 
 #strip
 str.strip() #removes whitespaces arround the string
@@ -549,9 +555,34 @@ str.rstrip() #removes whitespaces only from right side
 #checker
 str.isdigit() # check if str is digit "4545.34" -> False "3432" -> True "err324" -> False
 str.isalpha() # checks if a string contains only letters
+str.isnumeric() # Checks is a number is numeric
+
+## String Formating
+```python
+print("Hello {}, your luck number is {}".format(name, number)
+print("Hello {name}, your luck number is {number}".format(name=name, number=number)) 
+```
+### Format spcifier
+```python
+print("This is two decimal point number {:.2f}.format(34,34343))
+```
+
+
+
+Expr | Meaning | Example 
+--- | --- | --- 
+{:d} | integer value | '{:d}'.format(10.5) → '10' 
+{:.2f} | floating point with that many decimals | '{:.2f}'.format(0.5) → '0.50' 
+{:.2s} | string with that many characters | '{:.2s}'.format('Python') → 'Py' 
+{:<6s} | string aligned to the left that many spaces | '{:<6s}'.format('Py') → 'Py    ' 
+{:>6s} | string aligned to the right that many spaces | '{:>6s}'.format('Py') → '    Py' 
+{:^6s} | string centered in that many spaces | '{:^6s}'.format('Py') → '  Py ' 
 
 # join array of string
 "seperator".join(["hello", "world"]) # "Helloseperatorworld"
+
+# split a string
+"This is  me".split() # returns ["This", "is", "me"]
 ```
 
 ### list

@@ -102,6 +102,7 @@ Always try to inventing new and better ways and also appreciate the team member 
 * Meeting new people and understanding people 
 * Focus on communication
 
+<<<<<<< HEAD
 ## Responsiblities
 1) Planning Organizating: 
 	* Make use of prductivity tools and create process
@@ -207,6 +208,8 @@ Discuss what goes well and what didn't
 * Celebrating the end of a project
 
 
+=======
+>>>>>>> f9ee4aece27ab09776b16438239f58d9a6139f66
 
 # FAQ
 #### What is portfololio? 
