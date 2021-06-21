@@ -4,6 +4,22 @@ title:  "Python Programming Notes"
 category: Python
 tags: python
 ---
+# Hello world
+```python
+print("Hello world")
+print("Second line")
+```
+Notice that these two line are printed in different lines by default becuase print function automatically adds a newline character after it has done printing the first parmeter. Now what if we want to end with a diffrent character like " " (space) ? 
+```python
+print("Hello world", end=" ")
+prinnt("Second line")
+```
+Notice that both print functions is displaying its output in the sameline
+
+# One thing that you should always remind while choosing python
+* Python is a interpreted language so it good for writting short scripts, testing, problem solving
+* Python is not suitable for big software and insfrastructure because there will be more chance to error.
+
 
 # Mathemetical Operators:
 ```python
@@ -16,6 +32,11 @@ a // b # Integer part of the integer division of a by b
 a % b # The remainder part of the integer division of a by b
 ```
 
+# Logical Operators
+* `and` requires both expression to be true
+* `or` requires atleast one expression to be true
+* `not` inverts the result of a expression
+
 
 ## Variable Types
 
@@ -27,6 +48,25 @@ a % b # The remainder part of the integer division of a by b
 
 **string:** Stores strings
 
+### Strings 
+Strings in python is immutable. We cannot modify a single index of a string. Instead we have to assign a new string.
+We can read a single index of a string by using string index
+```python
+str = "Prince Billy Graham Karmoker"
+print(str[4]) # prints "c"
+```
+We can also know the index of first occurence of a substring in a string
+```python
+str = "Prince Billy Graham Karmoker"
+str.index("Graham") # prints "13"
+```
+We can also use `in` keyword to find if a substring exist in another string
+```python
+"Billy" in "Prince Billy Graham Karmoker" # return true
+"Winy" in "Prince Billy Graham Karmoker" # return false
+```
+
+
 ### Variable naming rules
 
 1) Underscore (\_), numbers and letters are allowed in a variable name
@@ -35,7 +75,7 @@ a % b # The remainder part of the integer division of a by b
 
 
 
-## Know the type of a function 
+## Know the type of a variable
 To know the type of a specific function we can use the `type(variable)` function 
 ```python
 print(type(2)) # Prints "int"
@@ -215,6 +255,12 @@ oneValue = ("me",)
 
 Similar to list but we access it using key rather than index
 
+The following types are allowed to be used as dictonary keys:
+* Number
+* String
+* Boolean
+* Tuples
+
 ```python
 dct = {'key1' : "value1", 'key2' : "value2"}
 ```
@@ -225,6 +271,25 @@ Return all keys & values dictionary:
 dct.keys(); #return keys
 dct.values(); #return values	
 ```
+
+```python
+for key in dct:
+	print(key)
+
+for key in dct.keys():
+	print(key)
+
+for value in dct.values():
+	print(value)
+
+for key, value in dct.items():
+	print(key, value)
+```
+```
+dct.update(other_dct) # Update a dictonary using other dictonary, updates existing keys and add new keys from other dct
+dct.clear() # Removes all the items of the dictonary 
+```
+
 
 
 
@@ -375,6 +440,9 @@ from package_or_module import pfunction, qfunction, sfunction as x, zfunction
 
 Constructor
 
+#### `__str__()`
+Return the string representaion of the class here
+
 #### Class Inheritance
 
 ```python
@@ -497,7 +565,12 @@ ls.insert(0, item); #inserts an item at any position of the string
 ## remove an item 
 del ls[2] #removes the item at index 2
 last_item = ls.pop() #removes and returns the last item from list
+ls.pop(2) # removes the item at index 2
 last_item.remove('value') #remove an item using its value
+ls.clear() # Clears all the item of a list
+ls.copy() # Cretaes a copy of the list
+ls.extend(other_list) # appends all element of other list
+
 
 ## sorting
 # permenent sorting
