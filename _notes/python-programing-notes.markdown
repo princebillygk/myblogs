@@ -356,12 +356,18 @@ BOO
 
 
 ### IS and NOT Operator
-
+x is y is id(x) == id(y). id function alwasy returns seperate value for each object in python
 ```python
-name = 'John'
-name is 'John'
-name is not 'Tom'
+A = 'John'
+B = 'John'
+C = A
+print(B is C) # False
+print(B == C) # True
+
+print(A is C) # True
+print(A == C) # True
 ```
+
 
 
 
