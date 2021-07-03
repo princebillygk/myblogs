@@ -83,10 +83,7 @@ We can also use `in` keyword to find if a substring exist in another string
 ```python
 "Billy" in "Prince Billy Graham Karmoker" # return true
 "Winy" in "Prince Billy Graham Karmoker" # return false
-<<<<<<< HEAD
 ```
-=======
->>>>>>> f9ee4aece27ab09776b16438239f58d9a6139f66
 
 
 ### Variable naming rules
