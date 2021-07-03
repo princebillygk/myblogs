@@ -20,6 +20,25 @@ Notice that both print functions is displaying its output in the sameline
 * Python is a interpreted language so it good for writting short scripts, testing, problem solving
 * Python is not suitable for big software and insfrastructure because there will be more chance to error.
 
+# if-elif-else
+Why this first? python supports some advance types of conditional expression lets see
+```python
+ if 18.5 <= weight / height**2 < 25:
+    print("BMI is considered 'normal'")
+```
+Did you see it? We didin't need to include `and` here like any other programming languages. 
+
+Some other regular expression: 
+
+```python
+if is_raining and is_sunny:
+    print("Is there a rainbow?")
+
+if (not unsubscribed) and (location == "USA" or location == "CAN"):
+    print("send email")
+```
+
+Also please notice that it is `elif` instead of `else if` like any other programming language
 
 # Mathemetical Operators:
 ```python
