@@ -240,7 +240,7 @@ f float64 = float64(4)
 ```
 
 ## Constant 
-Constant in typescript can be string boolean or numeric values. Constant can not be declared using := 
+Constant in Go programming language can be string boolean or numeric values. Constant can not be declared using := 
 
 ```go
 const Pi = 3.1416
@@ -1251,7 +1251,7 @@ func main() {
 
 ## goroutine
 
-Something like javascript await keyword
+`go` keyword is used to create a asynchronous task. function that are called with this keyword will execute asynchronously.
 
 ```go
 package main
